@@ -1,0 +1,53 @@
+apiVersion: k3d.io/v1alpha4
+kind: Simple
+metadata:
+  name: develop
+servers: 1
+agents: 2
+volumes:
+  - volume: $HOME/k3d/storage/server0:/var/lib/rancher/k3s/storage/
+    nodeFilters:
+      - server:0
+  - volume: $HOME/k3d/storage/agent0:/var/lib/rancher/k3s/storage/
+    nodeFilters:
+      - agent:0
+  - volume: $HOME/k3d/storage/agent1:/var/lib/rancher/k3s/storage/
+    nodeFilters:
+      - agent:1
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+  - port: 8080:8080
+    nodeFilters:
+      - loadbalancer
+registries:
+  create:
+    image: registry:2
+    name: k3d-registry.127.0.0.1.nip.io
+    host: 127.0.0.1
+    hostPort: "5000"
+    volumes:
+      - $HOME/k3d/registry:/var/lib/registry
+options:
+  k3d:
+    wait: true
+    timeout: "60s"
+  runtime:
+    serversMemory: 3G
+    agentsMemory: 2G
+  k3s:
+    extraArgs:
+      - arg: --node-taint=nodeclass=special:NoSchedule
+        nodeFilters:
+          - agent:1
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+    nodeLabels:
+      - label: nodeclass=special
+        nodeFilters:
+          - agent:1

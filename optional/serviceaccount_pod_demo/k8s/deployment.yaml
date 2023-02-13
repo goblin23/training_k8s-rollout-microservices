@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sa-demo
+  name: sa-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sa-demo
+  template:
+    metadata:
+      labels:
+        app: sa-demo
+    spec:
+      serviceAccountName: sa-demo
+      containers:
+      - name: sa-demo
+        imagePullPolicy: Always
+        image: k3d-registry.127.0.0.1.nip.io:5000/serviceaccount_pod:sa-demo
+        args:
+          - /bin/bash
+          - -c
+          - sleep 86400

@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+data:
+  file.conf: |
+    property1=1234
+    property2=5678
+kind: ConfigMap
+metadata:
+  name: helloworld-file
+  namespace: demo

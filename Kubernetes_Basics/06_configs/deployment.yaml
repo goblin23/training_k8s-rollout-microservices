@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: helloworld
+  name: helloworld
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+      - name: helloworld
+        envFrom:
+        - configMapRef:
+            name: helloworld-config
+        - secretRef:
+            name: helloworld-secret
+        image: k3d-registry.127.0.0.1.nip.io:5000/helloworld:v0.1.0
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            memory: 100Mi

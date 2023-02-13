@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: helloworld
+  namespace: demo
+  labels:
+    app: helloworld
+spec:
+  containers:
+  - name: helloworld
+    image: k3d-registry.127.0.0.1.nip.io:5000/helloworld:v0.1.0
+    ports:
+    - containerPort: 8080

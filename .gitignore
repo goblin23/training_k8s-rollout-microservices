@@ -1,0 +1,13 @@
+demo.local.hr.jambit.space.key
+tls-secret.yaml
+*-solution.yaml
+binaries/linux
+binaries/darwin
+binaries/tools.tgz
+
+Helm_Basics/results
+Helm_Basics/01_create_helm-chart/helloworld
+
+Kustomize_Basics/results
+
+age-key.txt
