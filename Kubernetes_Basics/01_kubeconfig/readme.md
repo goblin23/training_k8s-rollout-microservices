@@ -5,7 +5,7 @@
     * `kubectl config view` && `kubectl config view --raw`
 
 * Was ist der aktuell Context?
-    * `kubectl config get-context`
+    * `kubectl config get-contexts`
 
 * Wie würde man den Context wechseln, wenn man mehrere hat?
     * `kubectl config use-context k3d-develop`
